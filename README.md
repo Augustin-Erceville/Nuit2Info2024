@@ -1,7 +1,7 @@
 # Nuit2Info2024
 Dossier des fichiers pour la nuit de l'infos de l'année 2024
 
-Commandes git utiles
+# Commandes git utiles
 Initialisé son projet
 `git init`
 
