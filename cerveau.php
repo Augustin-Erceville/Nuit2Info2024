@@ -110,6 +110,12 @@ $coeur_ocean = $coeur_ocean->fetchAll();
                 Tout comme une ville complexe où chaque bâtiment a sa fonction, le cerveau est organisé en zones spécifiques : le cortex frontal pour la prise de décision, l'hippocampe pour la mémoire, ou encore le cervelet pour la coordination. Chaque région, bien que spécialisée, travaille de concert pour maintenir l'équilibre et la performance du corps et de l'esprit.
                 <br><br>
                 Les connexions neuronales, comparables à des réseaux de communication avancés, se renforcent ou s'affaiblissent selon nos expériences, illustrant la plasticité cérébrale. Tout comme nous protégeons nos systèmes vitaux, prendre soin de notre cerveau – par une alimentation équilibrée, un bon sommeil et une stimulation cognitive – est essentiel pour vivre pleinement et en harmonie.
+                <br><br>
+                L'homme et l'océan sont profondément liés. Notre cerveau, tout comme l'océan, est un écosystème complexe où chaque élément interagit et influe sur les autres. Les découvertes scientifiques récentes ont montré que la santé de nos océans a un impact direct sur notre bien-être mental et physique, tout comme un environnement sain est essentiel pour un cerveau équilibré.
+                <br><br>
+                Dans cette perspective de respect de la nature et de préservation de l'environnement, le catamaran X70 se présente comme une innovation majeure. Ce bateau, qui fait partie des technologies maritimes de demain, est conçu pour produire zéro émission de CO2. En naviguant avec une propulsion hybride et une conception optimisée, il permet de réduire l'impact environnemental tout en offrant une expérience de navigation luxueuse et écologique. L'esprit humain et l'océan se rejoignent à travers des innovations comme celle-ci, prouvant que l'on peut allier progrès technologique et respect de notre planète.
+                <br><br>
+                <a><img src="https://i.goopics.net/raufmh.jpg" alt="Image"></a>
             </p>
         </div>
     </div>
