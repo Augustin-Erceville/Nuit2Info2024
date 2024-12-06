@@ -124,6 +124,25 @@ $coeur_ocean = $coeur_ocean->fetchAll();
             75% { transform: translateY(-20px); }
             100% { transform: translateY(0px); }
         }
+        #logo {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-image: url('https://i.goopics.net/abh155.jpg'); /* Image du logo */
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #logo:hover {
+            transform: scale(1.1); /* Agrandit légèrement le logo au survol */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
+        }
     </style>
 </head>
 <body>
@@ -143,6 +162,9 @@ $coeur_ocean = $coeur_ocean->fetchAll();
             </p>
         </div>
     </div>
+    <a href="index.html">
+        <div id="logo"></div>
+    </a>
 
     <div class="text-center mt-4">
         <div class="row">
