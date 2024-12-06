@@ -110,7 +110,9 @@ $conn = null;
     </style>
 </head>
 <body>
-
+<li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="Index.html">Accueil</a>
+</li>
 <h1>Ajouter un article</h1>
 
 <?php if ($message): ?>
