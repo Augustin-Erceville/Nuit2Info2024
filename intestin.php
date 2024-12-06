@@ -1,7 +1,7 @@
 <?php
 $bdd = new PDO('mysql:host=darkskill.seblemoine.fr;dbname=bdd_darkskill', 'bdd_darkskill', 'NTXxYV!3svia');
-$coeur_humain = $bdd->query("SELECT * FROM vue_articles WHERE categorie_article='coeur' AND types_article='Corp humain'");
-$coeur_ocean = $bdd->query("SELECT * FROM vue_articles WHERE categorie_article='coeur' AND types_article='ocean'");
+$coeur_humain = $bdd->query("SELECT * FROM vue_articles WHERE categorie_article='intestin' AND types_article='Corp humain'");
+$coeur_ocean = $bdd->query("SELECT * FROM vue_articles WHERE categorie_article='intestin' AND types_article='ocean'");
 
 $coeur_humain = $coeur_humain->fetchAll();
 $coeur_ocean = $coeur_ocean->fetchAll();
@@ -160,13 +160,22 @@ $coeur_ocean = $coeur_ocean->fetchAll();
         .blink {
             animation: blink 1s linear infinite;
         }
+
+        /* Image de Risitas qui s'affiche après un clic */
+        #risitasImage {
+            display: none;
+            max-width: 500px;
+            margin-top: 30px;
+            animation: zoom 0.5s infinite;
+        }
     </style>
 </head>
 <body>
 
 <div class="container mt-5 p-4 rounded" style="background-color: rgba(255, 255, 255, 0.1);">
     <div class="text-center mb-4">
-        <div class="border p-3 shake-on-click" onclick="shakeElement(this)">
+        <div class="border p-3 shake-on-click" onclick="showRisitas()">
+            <div class="border p-3 shake-on-click" onclick="playRisitasLaugh()">
             <h1>Les Intestins</h1>
         </div>
         <div class="border p-4 mt-4">
@@ -185,38 +194,62 @@ $coeur_ocean = $coeur_ocean->fetchAll();
                 <div class="border p-3 zoom-on-hover">
                     <h4 class="shake-on-click" onclick="shakeElement(this)">Le Corps Humain </h4>
                 </div>
-                <div class="border p-3">
-                    <p class="color-change blink">Découvrez le rôle essentiel des intestins dans notre santé et leur impact sur notre bien-être.<br>
-                        <a href="https://www.hirslanden.ch/fr/corporate/campagne/intestin-organe-fascinant.html" target="_blank">En savoir plus</a></p>
-                </div>
+                <?php
+                foreach ($coeur_humain as $c_humain) {
+
+                    ?>
+                    <div class="border p-3 mb-3">
+                        <p><?=$c_humain["description_article"]?> <br>
+                            <a href="<?=$c_humain["url_article"]?>" target="_blank"><?=$c_humain["titre_article"]?></a></p>
+                    </div>
+
+                    <?php
+                }
+                ?>
             </div>
             <div class="col">
                 <div class="border p-3 zoom-on-hover">
                     <h4 class="shake-on-click" onclick="shakeElement(this)">La Pollution Océanique</h4>
                 </div>
-                <div class="border p-3">
-                    <p class="color-change blink">
-                        Explorez l'impact de la pollution océanique sur la faune marine et découvrez comment elle perturbe l'équilibre de nos écosystèmes. <br>
-                        <a href="https://www.imo.org/fr/MediaCentre/HotTopics/Pages/marinelitter-default.aspx" target="_blank">En savoir plus</a></p>
-                </div>
+                <?php
+                foreach ($coeur_ocean as $c_ocean) {
+                    ?>
+                    <div class="border p-3 mb-3">
+                        <p><?=$c_ocean["description_article"]?> <br>
+                            <a href="<?=$c_ocean["url_article"]?>" target="_blank"><?=$c_ocean["titre_article"]?></a></p>
+                    </div>
+                    <?php
+                }
+                ?>
             </div>
         </div>
     </div>
+
+    <!-- Image de Risitas cachée au départ -->
+    <img id="risitasImage"  src="https://i.goopics.net/vxjrjb.jpg" alt="Image" alt="Risitas" onclick="playRisitasLaugh()">
+
 </div>
 
 <script>
+    // Fonction pour faire apparaître l'image de Risitas et jouer son rire
+    function showRisitas() {
+        const image = document.getElementById('risitasImage');
+        image.style.display = 'block'; // Afficher l'image
+        playRisitasLaugh(); // Jouer le son de son rire
+    }
+
+    // Fonction pour jouer le rire de Risitas
+    function playRisitasLaugh() {
+        const audio = new Audio("El Risitas Laugh.mp3");// Remplace par ton URL de rire de Risitas
+        audio.play().catch((error) => console.error("Erreur lors du chargement du son : ", error));
+    }
+
+    // Fonction pour secouer un élément
     function shakeElement(element) {
         element.style.animation = 'shake 0.5s ease-out';
-        playTrollSound(); // Jouer le son de troll lors du clic
         setTimeout(() => {
             element.style.animation = ''; // Reset animation
         }, 500);
-    }
-
-    // Fonction pour jouer un son de troll
-    function playTrollSound() {
-        const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'); // Remplace par ton URL de son de troll
-        audio.play().catch((error) => console.error("Erreur lors du chargement du son : ", error));
     }
 </script>
 

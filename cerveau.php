@@ -1,7 +1,7 @@
 <?php
 $bdd = new PDO('mysql:host=darkskill.seblemoine.fr;dbname=bdd_darkskill', 'bdd_darkskill', 'NTXxYV!3svia');
-$coeur_humain = $bdd->query("SELECT * FROM vue_articles WHERE categorie_article='coeur' AND types_article='Corp humain'");
-$coeur_ocean = $bdd->query("SELECT * FROM vue_articles WHERE categorie_article='coeur' AND types_article='ocean'");
+$coeur_humain = $bdd->query("SELECT * FROM vue_articles WHERE categorie_article='cerveau' AND types_article='Corp humain'");
+$coeur_ocean = $bdd->query("SELECT * FROM vue_articles WHERE categorie_article='cerveau' AND types_article='ocean'");
 
 $coeur_humain = $coeur_humain->fetchAll();
 $coeur_ocean = $coeur_ocean->fetchAll();
@@ -148,19 +148,33 @@ $coeur_ocean = $coeur_ocean->fetchAll();
                 <div class="border p-3">
                     <h4>Humain</h4>
                 </div>
-                <div class="border p-3">
-                    <p>Découvrez les mystères et le fonctionnement fascinant du cerveau humain, siège de notre pensée et de nos émotions. <br>
-                        <a href="https://www.mnhn.fr/fr/tout-savoir-sur-le-cerveau" class="whirl-link">En savoir plus</a></p>
-                </div>
+                <?php
+                foreach ($coeur_humain as $c_humain) {
+
+                    ?>
+                    <div class="border p-3 mb-3">
+                        <p><?=$c_humain["description_article"]?> <br>
+                            <a href="<?=$c_humain["url_article"]?>" target="_blank"><?=$c_humain["titre_article"]?></a></p>
+                    </div>
+
+                    <?php
+                }
+                ?>
             </div>
             <div class="col">
                 <div class="border p-3">
                     <h4>L'Océan</h4>
                 </div>
-                <div class="border p-3">
-                    <p>Explorez les profondeurs de l'océan, ce vaste système complexe qui influence la vie sur Terre. <br>
-                        <a href="https://fne.asso.fr/dossiers/10-conseils-pour-agir-et-preserver-l-ocean-au-quotidien" class="whirl-link">En savoir plus</a></p>
-                </div>
+                <?php
+                foreach ($coeur_ocean as $c_ocean) {
+                    ?>
+                    <div class="border p-3 mb-3">
+                        <p><?=$c_ocean["description_article"]?> <br>
+                            <a href="<?=$c_ocean["url_article"]?>" target="_blank"><?=$c_ocean["titre_article"]?></a></p>
+                    </div>
+                    <?php
+                }
+                ?>
             </div>
         </div>
     </div>
