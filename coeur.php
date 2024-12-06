@@ -1,3 +1,16 @@
+<?php
+
+
+
+
+$bdd = new PDO('mysql:host=darkskill.seblemoine.fr;dbname=bdd_darkskill', 'bdd_darkskill', 'NTXxYV!3svia');
+$coeur_humain = $bdd->query("SELECT * FROM vue_articles WHERE categorie_article='coeur' AND types_article='Corp humain'");
+$coeur_ocean = $bdd->query("SELECT * FROM vue_articles WHERE categorie_article='coeur' AND types_article='ocean'");
+
+$coeur_humain = $coeur_humain->fetchAll();
+$coeur_ocean = $coeur_ocean->fetchAll();
+
+?>
 <!doctype html>
 <html lang="fr">
 <head>
@@ -76,6 +89,9 @@
                 Ainsi, le lien entre le cœur humain et le cœur de l'océan n'est pas seulement symbolique. Les deux rappellent l'importance de la circulation vitale, de l'équilibre et de l'harmonie. Prendre soin de notre cœur revient aussi à protéger l'océan, ce cœur battant de la Terre, source de vie et de régénération pour l'ensemble des écosystèmes, y compris le nôtre.
             </p>
         </div>
+
+
+
     </div>
 
     <div class="text-center mt-4">
@@ -84,19 +100,41 @@
                 <div class="border p-3">
                     <h4>Le Corps Humain</h4>
                 </div>
-                <div class="border p-3">
+                <div class="border p-3 mb-3">
                     <p>Explorez les merveilles du coeur du corps humain et son fonctionnement complexe. <br>
                         <a href="https://www.kenhub.com/fr/library/anatomie/coeur" target="_blank">En savoir plus</a></p>
                 </div>
+                <?php
+                foreach ($coeur_humain as $c_humain) {
+
+                    ?>
+                    <div class="border p-3 mb-3">
+                        <p><?=$c_humain["description_article"]?> <br>
+                            <a href="<?=$c_humain["url_article"]?>" target="_blank"><?=$c_humain["titre_article"]?></a></p>
+                    </div>
+
+                    <?php
+                }
+                ?>
             </div>
             <div class="col">
                 <div class="border p-3">
                     <h4>L'Océan</h4>
                 </div>
-                <div class="border p-3">
+                <div class="border p-3 mb-3">
                     <p>Découvrez la beauté et les mystères de l'océan, source de vie sur notre planète. <br>
                         <a href="https://www.aquariumdeparis.com/wp-content/uploads/2019/10/brochure-ateliers-pedagogiques-2019-2020-aquarium-de-paris.pdf" target="_blank">En savoir plus</a></p>
                 </div>
+                <?php
+                foreach ($coeur_ocean as $c_ocean) {
+                    ?>
+                    <div class="border p-3 mb-3">
+                        <p><?=$c_ocean["description_article"]?> <br>
+                            <a href="<?=$c_ocean["url_article"]?>" target="_blank"><?=$c_ocean["titre_article"]?></a></p>
+                    </div>
+                <?php
+                }
+                ?>
             </div>
         </div>
     </div>
