@@ -136,9 +136,9 @@ $conn = null;
     <label for="categorie">Catégorie :</label>
     <select id="categorie" name="categorie" required>
         <option value="cerveau">Cerveau</option>
-        <option value="coeur">Coeur</option>
+        <option value="Coeur">Coeur</option>
         <option value="Intestin">Intestin</option>
-        <option value="poumon">Poumon</option>
+        <option value="Poumon">Poumon</option>
     </select><br>
 
     <label for="url">URL de l'article :</label>
