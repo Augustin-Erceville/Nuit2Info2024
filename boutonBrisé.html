@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Docteur Maboule</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .fullscreen-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .fullscreen-modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .fullscreen-modal.active {
+            display: flex;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .organ-zone {
+            position: absolute;
+            cursor: pointer;
+            background-color: transparent; /* Rendre les cases invisibles */
+        }
+
+        #heart {
+            top: 50%;
+            left: 45%;
+            width: 8%;
+            height: 8%;
+            transform: translate(-50%, -50%);
+        }
+
+        #right-heart {
+            top: 50%;
+            left: 53%;
+            width: 7%;
+            height: 7%;
+            transform: translate(-50%, -50%);
+        }
+
+        #brain {
+            top: 10%;
+            left: 45%;
+            width: 10%;
+            height: 10%;
+            transform: translate(-50%, -50%);
+        }
+
+        #intestines {
+            top: 65%;
+            left: 45%;
+            width: 10%;
+            height: 10%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Docteur Maboule</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#game">Jeux</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<header class="bg-primary text-white text-center py-5">
+    <div class="container">
+        <h1>La Fondation Race for Water</h1>
+    </div>
+</header>
+<main class="container my-5">
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <section class="mt-5">
+                <p>
+                    Fondée en 2010 par Marco Simeoni, entrepreneur suisse passionné par les océans, la Fondation Race for Water se consacre à leur préservation.
+                    Reconnue pour ses expéditions innovantes à bord de navires révolutionnaires, la Fondation œuvre depuis plus de dix ans pour mieux comprendre
+                    les impacts de la pollution plastique sur les écosystèmes et la santé humaine. Elle propose également des solutions concrètes pour empêcher
+                    les déchets plastiques d’atteindre les océans .
+                </p>
+                <p>
+                    En 2024, la Fondation reprendra ses activités à bord d’un nouveau catamaran révolutionnaire, le MODX 70, entièrement neutre en émission de CO₂.
+                    À travers de multiples missions, cette nouvelle expédition abordera une thématique clé : les océans et le changement climatique. Via son programme
+                    « <strong>Learn, Share, Act</strong> », elle mettra en lumière l’importance de la décarbonation du secteur maritime et la préservation d’un océan sain et vivant.
+                </p>
+            </section>
+        </div>
+    </div>
+</main>
+<header class="bg-primary text-white text-center py-5">
+    <div class="container">
+        <h1>Bienvenue sur le Jeu Docteur Maboule</h1>
+        <p class="lead">Amusez-vous en explorant les organes et en jouant au célèbre jeu interactif !</p>
+    </div>
+</header>
+<main class="container my-5">
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <h2 id="about">À propos du Jeu</h2>
+            <p>
+                Découvrez une version numérique amusante du célèbre jeu Docteur Maboule. Cliquez sur les différentes parties du corps
+                pour explorer et interagir avec les organes.
+            </p>
+            <div class="button-container">
+                <a href="#leftButton" class="btn btn-primary" id="play-now-btn">Jouer maintenant</a>
+                <button id="leftButton" class="button button-left" style="display: none">Bro</button>
+                <button id="rightButton" class="button button-right" style="display: none">ken</button>
+            </div>
+
+            <script>
+                const mainButton = document.getElementById("play-now-btn");
+                const leftButton = document.getElementById("leftButton");
+                const rightButton = document.getElementById("rightButton");
+                const container = document.querySelector(".button-container");
+
+                // Fonction pour injecter les styles CSS dynamiquement
+                function addDynamicCSS() {
+                    const style = document.createElement("style");
+                    style.innerHTML = `
+
+
+            .button-container {
+                position: relative;
+                width: 200px;
+                height: 50px;
+                perspective: 1000px;
+            }
+
+            .button {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-color: #3498db;
+                color: white;
+                border: none;
+                font-size: 18px;
+                font-weight: bold;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                transition: transform 0.5s ease, opacity 0.5s ease;
+            }
+
+            .button-left, .button-right {
+                transform-origin: center;
+                transition: transform 1.5s ease;
+            }
+
+            .miette {
+                position: absolute;
+                width: 5px;
+                height: 5px;
+                background-color: #333;
+                border-radius: 50%;
+                animation: fall 1s forwards;
+                pointer-events: none;
+            }
+
+            @keyframes fall {
+                0% {
+                    transform: translate(0, 0) scale(1);
+                    opacity: 1;
+                }
+                50% {
+                    transform: translate(0, 75px) scale(0.25);
+                    opacity: 0.5;
+                }
+                100% {
+                    transform: translate(0, 150px) scale(0.5);
+                    opacity: 0;
+                }
+            }
+        `;
+                    document.head.appendChild(style);
+                }
+
+                // Fonction pour générer des miettes à des positions données
+                function createMiette(left, top) {
+                    const miette = document.createElement("div");
+                    miette.classList.add("miette");
+
+                    // Positionne chaque miette avec une légère variation aléatoire
+                    miette.style.left = left;
+                    miette.style.top = top;
+
+                    const offsetX = Math.random() * 10 - 5; // Variation aléatoire entre -5px et +5px
+                    miette.style.transform = `translate(${offsetX}px, 0)`;
+
+                    container.appendChild(miette);
+
+                    // Supprime les miettes après l'animation
+                    miette.addEventListener("animationend", () => {
+                        miette.remove();
+                    });
+                }
+
+                // Fonction pour briser un bouton (gauche ou droite)
+                function breakButton(button, direction) {
+                    // Cache le bouton principal après avoir cliqué
+                    mainButton.style.display = "none";
+
+                    // Affiche les deux moitiés
+                    leftButton.style.display = "block";
+                    rightButton.style.display = "block";
+
+                    // Redimensionne les boutons brisés
+                    leftButton.style.width = "80px";
+                    rightButton.style.width = "80px";
+
+                    // Applique une transformation en fonction de la direction
+                    if (direction === 'center') {
+                        leftButton.style.transform = "rotate(+35deg)";
+                        rightButton.style.transform = "rotate(-35deg)";
+                        rightButton.style.marginLeft = "110px";
+                    } else {
+                        leftButton.style.transform = "rotate(+35deg)";
+                        rightButton.style.transform = "rotate(-35deg)";
+                        rightButton.style.marginLeft = "90px";
+                    }
+
+                    // Crée les miettes autour du bouton
+                    for (let i = 0; i < 60; i++) {
+                        createMiette("50%", "50%");
+                    }
+                    for (let i = 0; i < 60; i++) {
+                        createMiette("53%", "60%");
+                    }
+                    for (let i = 0; i < 60; i++) {
+                        createMiette("38%", "100%");
+                    }
+                    for (let i = 0; i < 60; i++) {
+                        createMiette("40%", "44%");
+                    }
+                    for (let i = 0; i < 60; i++) {
+                        createMiette("60%", "33%");
+                    }
+                }
+
+                // Ajouter le CSS dynamique dès le chargement de la page
+                addDynamicCSS();
+
+                // Gestion des clics sur les boutons
+                mainButton.addEventListener("click", () => {
+                    // Lorsque le bouton principal est cliqué, les boutons gauche et droit se brisent indépendamment
+                    breakButton(leftButton, 'left');  // Direction 'left' pour le bouton gauche
+                    breakButton(rightButton, 'right'); // Direction 'right' pour le bouton droit
+                });
+            </script>
+        </div>
+        <div class="col-md-6 text-center">
+            <img src="Image Humain.webp" alt="Image du jeu Docteur Maboule" class="img-fluid shadow rounded">
+        </div>
+    </div>
+</main>
+<footer class="bg-dark text-white text-center py-3">
+    <div class="container">
+        <p class="mb-0">© 2024 Docteur Maboule. Tous droits réservés.</p>
+    </div>
+</footer>
+<div class="fullscreen-modal" id="image-modal">
+    <span class="close-modal" id="close-modal">&times;</span>
+    <div class="position-relative" style="width: 90%; height: 90%;">
+        <img src="Image Humain.webp" alt="Image Docteur Maboule en plein écran" style="width: 100%; height: 100%;">
+        <div id="heart" class="organ-zone" data-organ="coeur" onclick="location.href='coeur.php'"></div>
+        <div id="right-heart" class="organ-zone" data-organ="coeur" onclick="location.href='poumon.php'"></div>
+        <div id="brain" class="organ-zone" data-organ="cerveau" onclick="location.href='cerveau.php'"></div>
+        <div id="intestines" class="organ-zone" data-organ="intestins" onclick="location.href='intestin.php'"></div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script>
+    const playNowBtn = document.getElementById('play-now-btn');
+    const imageModal = document.getElementById('image-modal');
+    const closeModal = document.getElementById('close-modal');
+
+    playNowBtn.addEventListener('click', () => {
+        setTimeout(() => {
+            imageModal.classList.add('active');
+        }, 1000);
+    });
+
+    closeModal.addEventListener('click', () => {
+        imageModal.classList.remove('active');
+    });
+
+    imageModal.addEventListener('click', (e) => {
+        if (e.target === imageModal) {
+            imageModal.classList.remove('active');
+        }
+    });
+</script>
+</body>
+</html>
