@@ -1,3 +1,12 @@
+<?php
+$bdd = new PDO('mysql:host=darkskill.seblemoine.fr;dbname=bdd_darkskill', 'bdd_darkskill', 'NTXxYV!3svia');
+$coeur_humain = $bdd->query("SELECT * FROM vue_articles WHERE categorie_article='coeur' AND types_article='Corp humain'");
+$coeur_ocean = $bdd->query("SELECT * FROM vue_articles WHERE categorie_article='coeur' AND types_article='ocean'");
+
+$coeur_humain = $coeur_humain->fetchAll();
+$coeur_ocean = $coeur_ocean->fetchAll();
+
+?>
 <html lang="fr"><head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -95,54 +104,33 @@
                 <div class="border p-3" style="transform: rotate(0deg);">
                     <h4>Le Corps Humain</h4>
                 </div>
-                <div class="border p-3 mb-3" style="transform: rotate(0deg);">
-                    <p>Explorez les merveilles du coeur du corps humain et son fonctionnement complexe. <br>
-                        <a href="https://www.kenhub.com/fr/library/anatomie/coeur" target="_blank">En savoir plus</a></p>
-                </div>
-                <div class="border p-3 mb-3" style="transform: rotate(0deg);">
-                    <p>Description de test <br>
-                        <a href="https://discord.gg" target="_blank">Test</a></p>
-                </div>
+                <?php
+                foreach ($coeur_humain as $c_humain) {
 
-                <div class="border p-3 mb-3" style="transform: rotate(0deg);">
-                    <p>Description de test <br>
-                        <a href="https://discord.gg" target="_blank">Test</a></p>
-                </div>
+                    ?>
+                    <div class="border p-3 mb-3">
+                        <p><?=$c_humain["description_article"]?> <br>
+                            <a href="<?=$c_humain["url_article"]?>" target="_blank"><?=$c_humain["titre_article"]?></a></p>
+                    </div>
 
-                <div class="border p-3 mb-3" style="transform: rotate(0deg);">
-                    <p>Description de test <br>
-                        <a href="https://discord.gg" target="_blank">Test</a></p>
-                </div>
-
+                    <?php
+                }
+                ?>
             </div>
             <div class="col" style="">
                 <div class="border p-3" style="transform: rotate(0deg);">
                     <h4>L'Océan</h4>
                 </div>
-                <div class="border p-3 mb-3" style="transform: rotate(0deg);">
-                    <p>Découvrez la beauté et les mystères de l'océan, source de vie sur notre planète. <br>
-                        <a href="https://www.aquariumdeparis.com/wp-content/uploads/2019/10/brochure-ateliers-pedagogiques-2019-2020-aquarium-de-paris.pdf" target="_blank">En savoir plus</a></p>
-                </div>
-                <div class="border p-3 mb-3" style="transform: rotate(0deg);">
-                    <p>Description de test <br>
-                        <a href="https://discord.gg" target="_blank">Test</a></p>
-                </div>
-                <div class="border p-3 mb-3" style="transform: rotate(0deg);">
-                    <p>Description de test <br>
-                        <a href="https://discord.gg" target="_blank">Test</a></p>
-                </div>
-                <div class="border p-3 mb-3" style="transform: rotate(0deg);">
-                    <p>Description de test <br>
-                        <a href="https://discord.gg" target="_blank">Test</a></p>
-                </div>
-                <div class="border p-3 mb-3" style="transform: rotate(0deg);">
-                    <p>Description de test <br>
-                        <a href="https://discord.gg" target="_blank">Test</a></p>
-                </div>
-                <div class="border p-3 mb-3" style="transform: rotate(0deg);">
-                    <p>Description de test <br>
-                        <a href="https://discord.gg" target="_blank">Test</a></p>
-                </div>
+                <?php
+                foreach ($coeur_ocean as $c_ocean) {
+                    ?>
+                    <div class="border p-3 mb-3">
+                        <p><?=$c_ocean["description_article"]?> <br>
+                            <a href="<?=$c_ocean["url_article"]?>" target="_blank"><?=$c_ocean["titre_article"]?></a></p>
+                    </div>
+                    <?php
+                }
+                ?>
             </div>
         </div>
     </div>
