@@ -76,6 +76,41 @@
             height: 10%;
             transform: translate(-50%, -50%);
         }
+
+        .custom-table {
+            width: 100%;
+            margin-bottom: 50px;
+        }
+
+        .custom-table td {
+            vertical-align: middle;
+        }
+
+        .text-cell {
+            width: 30%;
+            padding: 10px;
+        }
+
+        .image-cell {
+            width: 70%;
+            padding: 10px;
+        }
+
+        /* Agrandir la taille des 2 premières images */
+        .custom-table .image-cell img {
+            max-width: 100%; /* L'image va prendre toute la largeur de la cellule */
+            height: auto; /* Maintenir le ratio de l'image */
+            border-radius: 15px; /* Arrondir les bords des images */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Ajouter une ombre légère */
+        }
+
+        .custom-table .image-cell:first-child img {
+            width: 150%; /* Agrandir la première image */
+        }
+
+        .custom-table .image-cell:nth-child(2) img {
+            width: 150%; /* Agrandir la deuxième image */
+        }
     </style>
 </head>
 <body>
@@ -114,31 +149,52 @@
         <h1>La Fondation Race for Water</h1>
     </div>
 </header>
+
 <main class="container my-5">
-    <div class="row">
-        <div class="col-md-6 mb-4">
-            <section class="mt-5">
+
+    <table class="custom-table">
+        <tr>
+            <td class="text-cell">
                 <p>
                     Fondée en 2010 par Marco Simeoni, entrepreneur suisse passionné par les océans, la Fondation Race for Water se consacre à leur préservation.
                     Reconnue pour ses expéditions innovantes à bord de navires révolutionnaires, la Fondation œuvre depuis plus de dix ans pour mieux comprendre
                     les impacts de la pollution plastique sur les écosystèmes et la santé humaine. Elle propose également des solutions concrètes pour empêcher
-                    les déchets plastiques d’atteindre les océans .
+                    les déchets plastiques d’atteindre les océans.
                 </p>
+            </td>
+            <td class="image-cell">
+                <a href="https://goopics.net/i/57r99p">
+                    <img src="https://i.goopics.net/57r99p.gif" alt="Image 1">
+                </a>
+            </td>
+        </tr>
+    </table>
+
+    <table class="custom-table">
+        <tr>
+            <td class="image-cell">
+                <a href="https://goopics.net/i/76l7pd">
+                    <img src="https://i.goopics.net/76l7pd.gif" alt="Image 2">
+                </a>
+            </td>
+            <td class="text-cell">
                 <p>
                     En 2024, la Fondation reprendra ses activités à bord d’un nouveau catamaran révolutionnaire, le MODX 70, entièrement neutre en émission de CO₂.
                     À travers de multiples missions, cette nouvelle expédition abordera une thématique clé : les océans et le changement climatique. Via son programme
                     « <strong>Learn, Share, Act</strong> », elle mettra en lumière l’importance de la décarbonation du secteur maritime et la préservation d’un océan sain et vivant.
                 </p>
-            </section>
-        </div>
-    </div>
+            </td>
+        </tr>
+    </table>
 </main>
+
 <header class="bg-primary text-white text-center py-5">
     <div class="container">
         <h1>Bienvenue sur le Jeu Docteur Maboule</h1>
         <p class="lead">Amusez-vous en explorant les organes et en jouant au célèbre jeu interactif !</p>
     </div>
 </header>
+
 <main class="container my-5">
     <div class="row">
         <div class="col-md-6 mb-4">
@@ -154,11 +210,13 @@
         </div>
     </div>
 </main>
+
 <footer class="bg-dark text-white text-center py-3">
     <div class="container">
         <p class="mb-0">© 2024 Docteur Maboule. Tous droits réservés.</p>
     </div>
 </footer>
+
 <div class="fullscreen-modal" id="image-modal">
     <span class="close-modal" id="close-modal">&times;</span>
     <div class="position-relative" style="width: 90%; height: 90%;">
@@ -169,6 +227,7 @@
         <div id="intestines" class="organ-zone" data-organ="intestins" onclick="location.href='intestin.php'"></div>
     </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>
     const playNowBtn = document.getElementById('play-now-btn');
@@ -189,6 +248,8 @@
         }
     });
 </script>
+
 </body>
 </html>
+
 
