@@ -1,7 +1,7 @@
 <?php
 session_start();
-if (!isset($_SESSION['utilisateur']) || $_SESSION['utilisateur']['role'] !== 'administrateur') {
-    header('Location: Connexion.php');
+if (!isset($_SESSION['utilisateur']) || $_SESSION['utilisateur']['role'] !== 'Administrateur') {
+    header('Location: connexion.php');
     exit();
 }
 
