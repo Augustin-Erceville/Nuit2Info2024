@@ -15,19 +15,20 @@ if (isset($_POST['envoyer'])) {
         !empty($email) && !empty($password)) {
 
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $req = $bdd->prepare('INSERT INTO utilisateur (prenom, nom, telephone, email, password, naissance) VALUES (:prenom, :nom, :telephone, :email, :password, :naissance)');
+            $req = $bdd->prepare('INSERT INTO utilisateur (prenom, nom, telephone, email, password, naissance, role) VALUES (:prenom, :nom, :telephone, :email, :password, :naissance,:role)');
             $success = $req->execute([
                 'prenom' => $prenom,
                 'nom' => $nom,
                 'telephone' => $telephone,
                 'email' => $email,
-                'password' => $password,
-                'naissance' => $naissance
+                'password' => password_hash($password, PASSWORD_DEFAULT),
+                'naissance' => $naissance,
+                'role' => $_POST['role']
             ]);
 
             if ($success) {
                 $_SESSION['email'] = $email;
-                header('Location: index.php');
+                header('Location: index.html');
                 exit();
             } else {$message = "Erreur lors de l'inscription. Veuillez réessayer.";}
         } else {$message = "Adresse email invalide.";}
