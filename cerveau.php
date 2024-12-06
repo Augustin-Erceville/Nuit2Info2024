@@ -94,6 +94,28 @@ $coeur_ocean = $coeur_ocean->fetchAll();
             animation: whirl 1.5s ease-in-out forwards;
             transform-origin: center;
         }
+
+        /* Logo rond en bas à droite avec image */
+        #logo {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-image: url('https://i.goopics.net/abh155.jpg'); /* Image du logo */
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #logo:hover {
+            transform: scale(1.1); /* Agrandit légèrement le logo au survol */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
+        }
+
     </style>
 </head>
 <body>
@@ -144,6 +166,11 @@ $coeur_ocean = $coeur_ocean->fetchAll();
     </div>
 </div>
 
+
+<a href="http://localhost/MIAVOUDILA%20Ivann/NuitDeINFO/Nuit2Info2024/">
+    <div id="logo"></div>
+</a>
+
 <script>
     document.querySelectorAll('.whirl-link').forEach((link) => {
         link.addEventListener('click', (event) => {
@@ -192,7 +219,6 @@ $coeur_ocean = $coeur_ocean->fetchAll();
             console.error("Erreur lors de la lecture du son : ", error);
         });
     }
-
 
     // Ajoute des événements sur les liens avec la classe 'whirl-link'
     document.querySelectorAll('.whirl-link').forEach((link) => {
