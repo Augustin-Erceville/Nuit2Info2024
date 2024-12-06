@@ -1,12 +1,6 @@
 <?php
+
 session_start();
-
-// Paramètres de connexion à la base de données
-$host = 'localhost';
-$db = 'nom_de_ta_base';
-$user = 'ton_utilisateur';
-$pass = 'ton_mot_de_passe';
-
 try {
     // Création de la connexion PDO
     $conn = new PDO('mysql:host=darkskill.seblemoine.fr;dbname=bdd_darkskill', 'bdd_darkskill', 'NTXxYV!3svia');
@@ -21,10 +15,10 @@ try {
 $message = '';
 
 // Vérifier si l'utilisateur est connecté (par exemple avec un identifiant de session)
-if (!isset($_SESSION['id_utilisateur'])) {
+if (!isset($_SESSION['id_user'])) {
     $message = "Vous devez être connecté pour ajouter un article.";
 } else {
-    $ref_user = $_SESSION['id_utilisateur']; // Récupérer l'ID de l'utilisateur connecté
+    $ref_user = $_SESSION['id_user']; // Récupérer l'ID de l'utilisateur connecté
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Sécuriser les données envoyées par le formulaire
@@ -33,9 +27,8 @@ if (!isset($_SESSION['id_utilisateur'])) {
         $types = htmlspecialchars($_POST['types']);
         $categorie = htmlspecialchars($_POST['categorie']);
         $url = htmlspecialchars($_POST['url']);
-        $statut = 'refuse';  // Le statut est défini par défaut à "refusé"
+        $statut = 'refuse';
 
-        // Requête d'insertion avec requête préparée
         $sql = "INSERT INTO article (titre, description, types, statut, categorie, url, ref_user)
                 VALUES (:titre, :description, :types, :statut, :categorie, :url, :ref_user)";
 
@@ -101,11 +94,11 @@ $conn = null;
         }
         .radio-group {
             margin-bottom: 15px;
-            display: flex; /* Utilise Flexbox pour aligner les éléments en ligne */
-            gap: 20px; /* Espacement entre les boutons radio */
+            display: flex;
+            gap: 20px;
         }
         .radio-group input {
-            margin-right: 5px; /* Espacement entre le bouton radio et le texte */
+            margin-right: 5px;
         }
     </style>
 </head>
@@ -142,17 +135,14 @@ $conn = null;
 
     <label for="categorie">Catégorie :</label>
     <select id="categorie" name="categorie" required>
-        <option value="Cerveau">Cerveau</option>
-        <option value="Coeur">Coeur</option>
+        <option value="cerveau">Cerveau</option>
+        <option value="coeur">Coeur</option>
         <option value="Intestin">Intestin</option>
-        <option value="Poumon">Poumon</option>
+        <option value="poumon">Poumon</option>
     </select><br>
 
     <label for="url">URL de l'article :</label>
     <input type="url" id="url" name="url" required><br>
-
-    <!-- Le statut est défini en dur dans le code -->
-    <input type="hidden" name="statut" value="refuse">
 
     <input type="submit" value="Créer l'article">
 </form>

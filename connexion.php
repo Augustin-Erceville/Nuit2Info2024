@@ -1,36 +1,60 @@
 <?php
-$bdd = new PDO('mysql:host=darkskill.seblemoine.fr;dbname=bdd_darkskill', 'bdd_darkskill', 'NTXxYV!3svia');
 session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-if (isset($_POST['envoyer'])) {
-    $email = htmlspecialchars($_POST['email']);
-    $password = $_POST['password'];
+try {
+    // Connexion à la base de données
+    $bdd = new PDO(
+        'mysql:host=darkskill.seblemoine.fr;dbname=bdd_darkskill',
+        'bdd_darkskill',
+        'NTXxYV!3svia',
+        [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ]
+    );
+} catch (PDOException $e) {
+    die('Erreur de connexion à la base de données : ' . $e->getMessage());
+}
 
+$message = "";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Récupération des données du formulaire
+    $email = htmlspecialchars(trim($_POST['email'] ?? ''));
+    $password = trim($_POST['password'] ?? '');
     if (!empty($email) && !empty($password)) {
-        $req = $bdd->prepare('SELECT id_utilisateur, email, password FROM utilisateur WHERE email = :email');
-        $req->execute(['email' => $email]);
-        $user = $req->fetch();
-        if ($user) {
-            if (password_verify($password, $user['password'])) {
-                $_SESSION['id_user'] = $user['id_utilisateur'];
-                $_SESSION['email'] = $user['email'];
-                header('location:index.php');
-                exit();
+        try {
+            // Requête pour récupérer l'utilisateur correspondant à l'email
+            $req = $bdd->prepare('SELECT id_utilisateur, email, password FROM utilisateur WHERE email = :email');
+            $req->execute(['email' => $email]);
+            $user = $req->fetch();
+
+            if ($user) {
+                // Vérification du mot de passe
+                if (password_verify($password, $user['password'])) {
+                    // Connexion réussie
+                    $_SESSION['id_user'] = $user['id_utilisateur'];
+                    $_SESSION['email'] = $user['email'];
+                    header('Location: index.html');
+                    exit();
+                } else {
+                    $message = "Mot de passe incorrect.";
+                }
             } else {
-                echo "Mot de passe incorrect.";
+                $message = "Adresse email inconnue.";
             }
-        } else {
-            echo "Utilisateur non trouvé.";
+        } catch (PDOException $e) {
+            $message = "Erreur serveur : " . $e->getMessage();
         }
     } else {
-        echo "Tous les champs doivent être remplis.";
+        $message = "Tous les champs doivent être remplis.";
     }
 }
 ?>
 <!DOCTYPE html>
-<html lang="FR">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,23 +63,23 @@ if (isset($_POST['envoyer'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
-<div class="container">
-    <h1>Connexion</h1>
+<div class="container mt-5">
+    <h1 class="mb-4">Connexion</h1>
+    <?php if (!empty($message)) : ?>
+        <div class="alert alert-danger"><?= htmlspecialchars($message) ?></div>
+    <?php endif; ?>
     <form action="" method="post">
-        <label for="email">Adresse mail</label><br>
-        <input type="email" name="email" id="email" required/><br>
-
-        <label for="password">Mot de passe</label><br>
-        <input type="password" name="password" id="password" required/><br><br>
-
-        <input type="submit" name="envoyer" id="envoyer" value="Se connecter"/>
-        <?php
-        if (isset($message)) :
-            ?>
-            <?= $message ?><p></p>
-        <?php endif; ?>
+        <div class="mb-3">
+            <label for="email" class="form-label">Adresse mail</label>
+            <input type="email" name="email" id="email" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Mot de passe</label>
+            <input type="password" name="password" id="password" class="form-control" required>
+        </div>
+        <button type="submit" name="envoyer" class="btn btn-primary">Se connecter</button>
     </form>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

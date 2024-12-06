@@ -131,6 +131,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="formulaire.php">Forum</a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Inscription / Connexion
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="inscription.php">Inscription</a></li>
+                        <li><a class="dropdown-item" href="connexion.php">Connexion</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
@@ -194,7 +203,152 @@
                 Découvrez une version numérique amusante du célèbre jeu Docteur Maboule. Trouver les différentes parties du corps
                 cacher sur l'image pour explorer et interagir avec les organes.
             </p>
-            <a href="#game" class="btn btn-primary" id="play-now-btn">Jouer maintenant</a>
+            <div class="button-container">
+                <a href="#leftButton" class="btn btn-primary" id="play-now-btn">Jouer maintenant</a>
+                <button id="leftButton" class="button button-left" style="display: none">Bro</button>
+                <button id="rightButton" class="button button-right" style="display: none">ken</button>
+            </div>
+
+            <script>
+                const mainButton = document.getElementById("play-now-btn");
+                const leftButton = document.getElementById("leftButton");
+                const rightButton = document.getElementById("rightButton");
+                const container = document.querySelector(".button-container");
+
+                // Fonction pour injecter les styles CSS dynamiquement
+                function addDynamicCSS() {
+                    const style = document.createElement("style");
+                    style.innerHTML = `
+
+
+            .button-container {
+                position: relative;
+                width: 200px;
+                height: 50px;
+                perspective: 1000px;
+            }
+
+            .button {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-color: #3498db;
+                color: white;
+                border: none;
+                font-size: 18px;
+                font-weight: bold;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                transition: transform 0.5s ease, opacity 0.5s ease;
+            }
+
+            .button-left, .button-right {
+                transform-origin: center;
+                transition: transform 1.5s ease;
+            }
+
+            .miette {
+                position: absolute;
+                width: 5px;
+                height: 5px;
+                background-color: #333;
+                border-radius: 50%;
+                animation: fall 1s forwards;
+                pointer-events: none;
+            }
+
+            @keyframes fall {
+                0% {
+                    transform: translate(0, 0) scale(1);
+                    opacity: 1;
+                }
+                50% {
+                    transform: translate(0, 75px) scale(0.25);
+                    opacity: 0.5;
+                }
+                100% {
+                    transform: translate(0, 150px) scale(0.5);
+                    opacity: 0;
+                }
+            }
+        `;
+                    document.head.appendChild(style);
+                }
+
+                // Fonction pour générer des miettes à des positions données
+                function createMiette(left, top) {
+                    const miette = document.createElement("div");
+                    miette.classList.add("miette");
+
+                    // Positionne chaque miette avec une légère variation aléatoire
+                    miette.style.left = left;
+                    miette.style.top = top;
+
+                    const offsetX = Math.random() * 10 - 5; // Variation aléatoire entre -5px et +5px
+                    miette.style.transform = `translate(${offsetX}px, 0)`;
+
+                    container.appendChild(miette);
+
+                    // Supprime les miettes après l'animation
+                    miette.addEventListener("animationend", () => {
+                        miette.remove();
+                    });
+                }
+
+                // Fonction pour briser un bouton (gauche ou droite)
+                function breakButton(button, direction) {
+                    // Cache le bouton principal après avoir cliqué
+                    mainButton.style.display = "none";
+
+                    // Affiche les deux moitiés
+                    leftButton.style.display = "block";
+                    rightButton.style.display = "block";
+
+                    // Redimensionne les boutons brisés
+                    leftButton.style.width = "80px";
+                    rightButton.style.width = "80px";
+
+                    // Applique une transformation en fonction de la direction
+                    if (direction === 'center') {
+                        leftButton.style.transform = "rotate(+35deg)";
+                        rightButton.style.transform = "rotate(-35deg)";
+                        rightButton.style.marginLeft = "110px";
+                    } else {
+                        leftButton.style.transform = "rotate(+35deg)";
+                        rightButton.style.transform = "rotate(-35deg)";
+                        rightButton.style.marginLeft = "90px";
+                    }
+
+                    // Crée les miettes autour du bouton
+                    for (let i = 0; i < 60; i++) {
+                        createMiette("50%", "50%");
+                    }
+                    for (let i = 0; i < 60; i++) {
+                        createMiette("53%", "60%");
+                    }
+                    for (let i = 0; i < 60; i++) {
+                        createMiette("38%", "100%");
+                    }
+                    for (let i = 0; i < 60; i++) {
+                        createMiette("40%", "44%");
+                    }
+                    for (let i = 0; i < 60; i++) {
+                        createMiette("60%", "33%");
+                    }
+                }
+
+                // Ajouter le CSS dynamique dès le chargement de la page
+                addDynamicCSS();
+
+                // Gestion des clics sur les boutons
+                mainButton.addEventListener("click", () => {
+                    // Lorsque le bouton principal est cliqué, les boutons gauche et droit se brisent indépendamment
+                    breakButton(leftButton, 'left');  // Direction 'left' pour le bouton gauche
+                    breakButton(rightButton, 'right'); // Direction 'right' pour le bouton droit
+                });
+            </script>
         </div>
         <div class="col-md-6 text-center">
             <img src="Image Humain.webp" alt="Image du jeu Docteur Maboule" class="img-fluid shadow rounded">
@@ -226,7 +380,9 @@
     const closeModal = document.getElementById('close-modal');
 
     playNowBtn.addEventListener('click', () => {
-        imageModal.classList.add('active');
+        setTimeout(() => {
+            imageModal.classList.add('active');
+        }, 1000);
     });
 
     closeModal.addEventListener('click', () => {
@@ -241,6 +397,10 @@
 </script>
 
 </body>
+<<<<<<< HEAD:Index.html
+</html>
+=======
 </html>
 
 
+>>>>>>> 5b7b0f0009c96645b8623f0e57dc504b517ee0d0:index.html
