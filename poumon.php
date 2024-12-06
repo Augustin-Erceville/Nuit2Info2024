@@ -162,7 +162,7 @@ $coeur_ocean = $coeur_ocean->fetchAll();
             </p>
         </div>
     </div>
-    <a href="http://localhost/Nuit2info2024/#leftButton">
+    <a href="index.html">
         <div id="logo"></div>
     </a>
 

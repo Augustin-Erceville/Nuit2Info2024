@@ -181,7 +181,7 @@ $coeur_ocean = $coeur_ocean->fetchAll();
 </div>
 
 
-<a href="http://localhost/MIAVOUDILA%20Ivann/NuitDeINFO/Nuit2Info2024/">
+<a href="index.html">
     <div id="logo"></div>
 </a>
 
