@@ -202,20 +202,30 @@ $coeur_ocean = $coeur_ocean->fetchAll();
         });
     });
 
-    // Fonction pour faire apparaître un pop-up avec un message drôle
-    function showPopup() {
+        // Fonction pour faire apparaître un pop-up avec un message personnalisé
+        function showPopup() {
         const messages = [
-            "Tu t'amuses bien ? 😜",
-            "Pourquoi t'es là ?",
-            "Oops, une erreur s'est produite (ou pas).",
-            "Reviens ici, c'est important !",
-            "Tu cherches quelque chose ? 🧐"
+        "Tu t'amuses bien ? 😜",
+        "Pourquoi t'es là ?",
+        "Oops, une erreur s'est produite (ou pas).",
+        "Reviens ici, c'est important !",
+        "Tu cherches quelque chose ? 🧐"
         ];
         const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-        alert(randomMessage);
+        alert(randomMessage); // Affiche le pop-up avec un message aléatoire
     }
 
-    // Fonction pour déplacer un élément à une position aléatoire
+        // Sélectionner tous les liens contenant le texte "Test"
+        document.querySelectorAll('a').forEach((link) => {
+        // Vérifier si le lien contient le texte "Test"
+        if (link.textContent.includes('Test')) {
+        // Ajouter un événement 'mouseenter' pour afficher le pop-up
+        link.addEventListener('mouseenter', showPopup);
+    }
+    });
+
+
+// Fonction pour déplacer un élément à une position aléatoire
     function moveElementRandomly(element) {
         const maxX = window.innerWidth - element.offsetWidth;
         const maxY = window.innerHeight - element.offsetHeight;
@@ -257,7 +267,7 @@ $coeur_ocean = $coeur_ocean->fetchAll();
         newDiv.style.color = "red";
         newDiv.style.transform = "rotate(" + Math.random() * 360 + "deg)";
         document.body.appendChild(newDiv);
-    }, 5000);
+    }, 2000);
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
