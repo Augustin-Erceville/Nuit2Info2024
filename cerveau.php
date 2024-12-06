@@ -154,6 +154,64 @@ $coeur_ocean = $coeur_ocean->fetchAll();
             }, 1500);
         });
     });
+
+    // Fonction pour faire apparaître un pop-up avec un message drôle
+    function showPopup() {
+        const messages = [
+            "Tu t'amuses bien ? 😜",
+            "Pourquoi t'es là ?",
+            "Oops, une erreur s'est produite (ou pas).",
+            "Reviens ici, c'est important !",
+            "Tu cherches quelque chose ? 🧐"
+        ];
+        const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+        alert(randomMessage);
+    }
+
+    // Fonction pour déplacer un élément à une position aléatoire
+    function moveElementRandomly(element) {
+        const maxX = window.innerWidth - element.offsetWidth;
+        const maxY = window.innerHeight - element.offsetHeight;
+        const randomX = Math.floor(Math.random() * maxX);
+        const randomY = Math.floor(Math.random() * maxY);
+
+        element.style.left = randomX + "px";
+        element.style.top = randomY + "px";
+    }
+
+    // Fonction pour jouer un son troll
+    function playSound() {
+        const audio = new Audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"); // Remplace par un fichier valide
+        audio.play().catch((error) => {
+            console.error("Erreur lors de la lecture du son : ", error);
+        });
+    }
+
+
+    // Ajoute des événements sur les liens avec la classe 'whirl-link'
+    document.querySelectorAll('.whirl-link').forEach((link) => {
+        link.addEventListener("mouseenter", () => {
+            moveElementRandomly(link);
+            showPopup();
+        });
+
+        link.addEventListener("click", () => {
+            playSound();
+        });
+    });
+
+    // Ajouter des éléments étranges toutes les 5 secondes
+    setInterval(() => {
+        const newDiv = document.createElement("div");
+        newDiv.textContent = "Qu'est-ce que tu fais là ?";
+        newDiv.style.position = "absolute";
+        newDiv.style.left = Math.random() * window.innerWidth + "px";
+        newDiv.style.top = Math.random() * window.innerHeight + "px";
+        newDiv.style.fontSize = "20px";
+        newDiv.style.color = "red";
+        newDiv.style.transform = "rotate(" + Math.random() * 360 + "deg)";
+        document.body.appendChild(newDiv);
+    }, 5000);
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
