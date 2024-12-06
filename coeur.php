@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 $bdd = new PDO('mysql:host=darkskill.seblemoine.fr;dbname=bdd_darkskill', 'bdd_darkskill', 'NTXxYV!3svia');
 $coeur_humain = $bdd->query("SELECT * FROM vue_articles WHERE categorie_article='coeur' AND types_article='Corp humain'");
 $coeur_ocean = $bdd->query("SELECT * FROM vue_articles WHERE categorie_article='coeur' AND types_article='ocean'");
@@ -71,6 +68,19 @@ $coeur_ocean = $coeur_ocean->fetchAll();
             color: #FFEBEE;
             text-decoration: underline;
         }
+
+        @keyframes spinAround {
+            0% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(360deg) scale(1.1);
+            }
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -89,9 +99,6 @@ $coeur_ocean = $coeur_ocean->fetchAll();
                 Ainsi, le lien entre le cœur humain et le cœur de l'océan n'est pas seulement symbolique. Les deux rappellent l'importance de la circulation vitale, de l'équilibre et de l'harmonie. Prendre soin de notre cœur revient aussi à protéger l'océan, ce cœur battant de la Terre, source de vie et de régénération pour l'ensemble des écosystèmes, y compris le nôtre.
             </p>
         </div>
-
-
-
     </div>
 
     <div class="text-center mt-4">
@@ -132,7 +139,7 @@ $coeur_ocean = $coeur_ocean->fetchAll();
                         <p><?=$c_ocean["description_article"]?> <br>
                             <a href="<?=$c_ocean["url_article"]?>" target="_blank"><?=$c_ocean["titre_article"]?></a></p>
                     </div>
-                <?php
+                    <?php
                 }
                 ?>
             </div>
@@ -140,8 +147,66 @@ $coeur_ocean = $coeur_ocean->fetchAll();
     </div>
 </div>
 
+<script>
+    // Fait "vibrer" un élément au survol
+    document.querySelectorAll('.border').forEach(element => {
+        element.addEventListener('mouseover', () => {
+            element.style.transform = 'rotate(' + (Math.random() * 10 - 5) + 'deg)';
+        });
+        element.addEventListener('mouseout', () => {
+            element.style.transform = 'rotate(0)';
+        });
+    });
+
+    // Messages humoristiques au clic sur le titre
+    document.querySelector('h1').addEventListener('click', () => {
+        const messages = [
+            "Oh, tu as cliqué sur le titre ? Curieux...",
+            "C'est interdit de cliquer ici, mais bon, bravo.",
+            "Le cœur te remercie pour cet acte de curiosité.",
+            "Un jour, ce clic sauvera le monde, mais pas aujourd'hui.",
+            "Tu viens de réveiller l'Ancien Cœur... oops ?"
+        ];
+        alert(messages[Math.floor(Math.random() * messages.length)]);
+    });
+
+    document.querySelector('h4').addEventListener('click', () => {
+        const messages = [
+            "T'es chaud de jouer un jeu?",
+            "Essaye seulement de spam clique sur la grosse case au dessus tu verras bien.",
+            "T'es nul, tu fais que de cliquer",
+            "ça danse bien ici?",
+            "Fais danser les textes en bas en cliquant 5 fois sur la grosse case tu verras si t'as pas peur."
+        ];
+        alert(messages[Math.floor(Math.random() * messages.length)]);
+    });
+
+    // Changement aléatoire de la couleur du fond au clic sur le corps
+    document.body.addEventListener('click', () => {
+        const randomColor = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+        document.body.style.background = `linear-gradient(to bottom, ${randomColor}, #D32F2F)`;
+    });
+
+    // Ajout d'un mini-jeu caché (cliquez 5 fois sur un mot pour faire danser les colonnes)
+    let clickCount = 0;
+    document.body.addEventListener('click', (e) => {
+        if (e.target.tagName === 'A' || e.target.tagName === 'P') {
+            clickCount++;
+            if (clickCount === 5) {
+                document.querySelectorAll('.col').forEach((col) => {
+                    col.style.animation = 'spinAround 2s ease-in-out';
+                });
+                setTimeout(() => {
+                    document.querySelectorAll('.col').forEach(col => col.style.animation = '');
+                }, 2000); // Durée du tourbillon
+                clickCount = 0; // Réinitialiser
+            }
+        }
+    });
+
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 </body>
 </html>
-
